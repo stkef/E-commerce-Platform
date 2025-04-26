@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ../
+      dockerfile: Dockerfile/frontend/front.dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
+      - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}
+
+  backend:
+    build:
+      context: ../
+      dockerfile: Dockerfile/backend/back.dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    volumes:
+      - ../backend:/app
+      - /app/node_modules
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+
+  database:
+    image: postgres:15
+    container_name: supabase_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: supabase
+    volumes:
+      - supabase-data:/var/lib/postgresql/data
+
+volumes:
+  supabase-data:
