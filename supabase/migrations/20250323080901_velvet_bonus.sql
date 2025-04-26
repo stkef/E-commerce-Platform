@@ -1,26 +1,3 @@
-/*
-  # E-commerce Platform Schema
-
-  1. New Tables
-    - products
-      - Basic product information
-      - Inventory tracking
-      - Price and category
-    - reviews
-      - Product ratings and comments
-      - User relationship
-    - orders
-      - Order tracking
-      - Payment status
-    - order_items
-      - Products in each order
-      - Quantity and price tracking
-
-  2. Security
-    - RLS enabled on all tables
-    - Public read access for products
-    - Authenticated user access for reviews and orders
-*/
 
 -- Products table
 CREATE TABLE products (
